@@ -1,10 +1,10 @@
 // Задание 1.1 Базовые типы
 function getAllWorkers() {
     return [
-        { name: 'Ivan', surname: 'Ivanov', available: true, salary: 1000, category: 'Developer' },
-        { name: 'Petro', surname: 'Petrov', available: true, salary: 1500, category: 'Developer' },
-        { name: 'Vasyl', surname: 'Vasyliev', available: false, salary: 1600, category: 'QA' },
-        { name: 'Evgen', surname: 'Zhukov', available: true, salary: 1300, category: 'ScrumMaster' }
+        { name: 'Ivan', surname: 'Ivanov', available: true, salary: 1000, category: 'Developer', id: 1 },
+        { name: 'Petro', surname: 'Petrov', available: true, salary: 1500, category: 'Developer', id: 2 },
+        { name: 'Vasyl', surname: 'Vasyliev', available: false, salary: 1600, category: 'QA', id: 3 },
+        { name: 'Evgen', surname: 'Zhukov', available: true, salary: 1300, category: 'ScrumMaster', id: 4 }
     ];
 }
 ;
@@ -30,4 +30,13 @@ function getWorkersNamesByCategory(category) {
 function logWorkersNames(workers) {
     console.log(workers.join(', '));
 }
-logWorkersNames(getWorkersNamesByCategory('Developer'));
+//logWorkersNames(getWorkersNamesByCategory('Developer'));
+// Задание 1.3 Стрелочные функции
+getAllWorkers().forEach(function (worker) {
+    worker.category === "Developer" ? console.log(worker.name + " " + worker.surname) : '';
+});
+function getWorkerByID(id) {
+    var worker = getAllWorkers().find(function (worker) { return worker.id === id; });
+    return { name: worker.name, surname: worker.surname, salary: worker.salary };
+}
+console.log(getWorkerByID(2));
