@@ -2,14 +2,14 @@
 
 function getAllWorkers() {
     return [
-        {name: 'Ivan', surname: 'Ivanov', available: true, salary: 1000, category: 'Developer', id: 1},
-        {name: 'Petro', surname: 'Petrov', available: true, salary: 1500, category: 'Developer', id: 2},
-        {name: 'Vasyl', surname: 'Vasyliev', available: false, salary: 1600, category: 'QA', id: 3},
-        {name: 'Evgen', surname: 'Zhukov', available: true, salary: 1300, category: 'ScrumMaster', id: 4}
+        {name: 'Ivan', surname: 'Ivanov', available: true, salary: 1000, category: Category.Developer, id: 1},
+        {name: 'Petro', surname: 'Petrov', available: true, salary: 1500, category: Category.Designer, id: 2},
+        {name: 'Vasyl', surname: 'Vasyliev', available: false, salary: 1600, category: Category.Developer, id: 3},
+        {name: 'Evgen', surname: 'Zhukov', available: true, salary: 1300, category: Category.ScrumMaster, id: 4}
     ];
 };
 
-function logFirstAvailable(workers = {name: string, surname: string, available: boolean}): void {
+function logFirstAvailable(workers = {name: string, surname: string, available: boolean} = getAllWorkers()): void {
     console.log(`В списке ${workers.length} сотрудника`);
     console.log(`Доступные работники:`);
     for (let worker of workers) {
@@ -18,7 +18,7 @@ function logFirstAvailable(workers = {name: string, surname: string, available: 
     }
 }
 
-//logFirstAvailable(getAllWorkers());
+//logFirstAvailable();
 
 // Задание 1.2 Enum
 
@@ -30,7 +30,7 @@ const enum Category {
     ScrumMaster
 }
 
-function getWorkersNamesByCategory(category: string) {
+function getWorkersNamesByCategory(category: Category = Category.Designer) {
     const workers = getAllWorkers();
     let ourWorkers: Array<string> = [];
     for (let worker of workers) {
@@ -43,7 +43,7 @@ function logWorkersNames(workers: string []): void {
     console.log(workers.join(', '));
 }
 
-//logWorkersNames(getWorkersNamesByCategory('Developer'));
+//logWorkersNames(getWorkersNamesByCategory(Category.Developer));
 
 // Задание 1.3 Стрелочные функции
 
@@ -60,3 +60,38 @@ function getWorkerByID(id: number) {
 
 // Задание 1.4 Типы функций
 
+function createCustomerID(name: string, id: number) {
+	return `${id}. ${name}`;
+}
+
+const myID: string = createCustomerID('Ann', 10);
+//console.log(myID);
+
+let IdGenerator: (name: string, id: number) => string;
+IdGenerator = createCustomerID;
+
+//console.log(IdGenerator('Bogdan', 10));
+
+// Задание 1.5 Необходимые, дополнительные и остаточные параметры
+
+function createCustomer(name: string, age?: number, city?: string): void {
+	const nameStr = `Name: ${name}`;
+	const ageStr = `Age: ${age}`;
+	const cityStr = `City: ${city}`;
+
+	console.log(`${name ? nameStr : ''} ${age ? ageStr : ''} ${city ? cityStr : ''}`);
+} 
+
+//createCustomer('Roma', 24, 'Kiev');
+
+//logWorkersNames(getWorkersNamesByCategory());
+
+function сheckoutWorkers(customer: string, workersIDs: number[]) {
+	console.log(`Customer: ${customer}`);
+	const availWorkers = (getAllWorkers()
+						 	.filter((worker)=> workersIDs.indexOf(worker.id) && worker.available === true))
+						 .map((worker)=>return {name: worker.name, surname: worker.surname});
+	return availWorkers;
+}
+
+//const myWorkers = сheckoutWorkers('Bob', [1,2,4]).forEach((worker)=>console.log(`Name: ${worker.name} SurName: ${worker.surname}`));
